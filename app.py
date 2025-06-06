@@ -3,7 +3,7 @@ import mysql.connector
 
 app = Flask(__name__)
 
-# Function to retrieve data from a specific table
+
 def get_appliances(table):
     db = mysql.connector.connect(
         host="127.0.0.1",
@@ -19,7 +19,7 @@ def get_appliances(table):
     db.close()
     return appliances
 
-# Route for the index page to display all appliances
+
 @app.route('/')
 def index():
     db = mysql.connector.connect(
@@ -31,13 +31,13 @@ def index():
     cursor = db.cursor()
     query = "SELECT * FROM all_appliances"
     cursor.execute(query)
-    appliances = cursor.fetchall()  # Fetch all rows from the view
+    appliances = cursor.fetchall()  
     cursor.close()
     db.close()
     
     return render_template('index.html', appliances=appliances)
 
-# Routes for displaying specific appliances
+
 @app.route('/fridge')
 def fridge():
     appliances = get_appliances('fridge')
@@ -63,7 +63,7 @@ def IB():
     appliances = get_appliances('IB')
     return render_template('IB.html', appliances=appliances)
 
-# Route to delete an appliance entry
+
 @app.route('/delete_appliance/<table>/<int:id>', methods=['POST'])
 def delete_appliance(table, id):
     db = mysql.connector.connect(
@@ -80,7 +80,7 @@ def delete_appliance(table, id):
     db.close()
     return redirect(request.referrer)
 
-# Routes to add appliances
+
 @app.route('/add_fridge', methods=['GET', 'POST'])
 def add_fridge():
     if request.method == 'POST':
@@ -211,7 +211,7 @@ def add_ib():
     
     return render_template('add_ib.html')
 
-# Routes to update appliances
+
 @app.route('/update_fridge/<int:id>', methods=['GET', 'POST'])
 def update_fridge(id):
     if request.method == 'POST':
